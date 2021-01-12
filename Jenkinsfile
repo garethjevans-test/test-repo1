@@ -8,7 +8,22 @@ pipeline {
   }
 
   stages {
-    stage('Dummy') {
+    stage('Stage One') {
+      steps {
+        sh 'echo "Do Nothing...this is a fork"'
+      }
+    }
+    stage('Stage Two') {
+      steps {
+        sh 'echo "Do Nothing...this is a fork"'
+      }
+    }
+    stage('Stage Three') {
+      steps {
+        sh 'echo "Do Nothing...this is a fork"'
+      }
+    }
+    stage('Stage Four') {
       steps {
         sh 'echo "Do Nothing...this is a fork"'
       }
