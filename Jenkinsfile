@@ -10,7 +10,7 @@ pipeline {
   stages {
     stage('Dummy') {
       steps {
-        sh 'echo "Do Nothing...this is a fork"'
+        sh 'echo "Do Nothing...XXX"'
       }
     }
   }
