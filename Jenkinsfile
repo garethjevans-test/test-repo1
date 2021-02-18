@@ -21,8 +21,9 @@ pipeline {
         script {
           version = sh(returnStdout: true, script: './jx-release-version -debug').trim()
         }
-
         echo "New Version: $version"
+
+        sh "git remote -v"  
       }
     }
     stage('Tag') {
