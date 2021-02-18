@@ -12,7 +12,15 @@ pipeline {
       steps {
         sh 'curl -L -o jx-release-version-linux-amd64.tar.gz https://github.com/jenkins-x-plugins/jx-release-version/releases/download/v2.2.3/jx-release-version-linux-amd64.tar.gz'
         sh 'tar xvfz jx-release-version-linux-amd64.tar.gz'
-        checkout scm
+
+
+        script {
+          GIT_AUTH = credentials('github-access-token')
+          sh('''
+            git config --local credential.helper "!f() { echo username=\\$GIT_AUTH_USR; echo password=\\$GIT_AUTH_PSW; }; f"
+            git push origin HEAD:$TARGET_BRANCH
+          ''')
+        }
       }
     }
     stage('Change Request') {
@@ -26,13 +34,6 @@ pipeline {
 
         sh "git remote -v"
         sh "git config -l"
-
-        //withCredentials([sshUserPrivateKey(credentialsId: '<credential-id>', keyFileVariable: 'SSH_KEY')]) {
-        //  sh("git push origin <local-branch>:<remote-branch>")
-        //}
-        script {
-          GIT_CREDS = credentials('github-access-token')
-        }
       }
     }
     stage('Tag') {
