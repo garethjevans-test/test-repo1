@@ -15,24 +15,28 @@ pipeline {
         sh './jx-release-version'
       }
     }
-    stage('Stage One') {
+    stage('Change Request') {
+      when { changeRequest() }
       steps {
-        sh 'echo "Do Nothing...this is a fork"'  
+        echo "Change Request"  
       }
     }
-    stage('Stage Two') {
+    stage('Tag') {
+      when { buildingTag() }
       steps {
-        sh 'echo "Do Nothing...this is a fork"'
+        echo "Tag"
       }
     }
-    stage('Stage Three') {
+    stage('Release') {
+      when { branch 'main' }
       steps {
-        sh 'echo "Do Nothing...this is a fork"'
-      }
-    }
-    stage('Stage Four') {
-      steps {
-        sh 'echo "Do Nothing...XXX"'
+        echo "Release"
+        sh "git remote -v"
+
+        script {
+          gitCommit = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+          version = sh(returnStdout: true, script: './jx-release-version').trim()
+        }
       }
     }
   }
