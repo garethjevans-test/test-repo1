@@ -15,24 +15,22 @@ pipeline {
         sh './jx-release-version'
       }
     }
-    stage('Stage One') {
+    stage('Change Request') {
+      when ( changeRequest() )
       steps {
-        sh 'echo "This is a new feature"'
+        echo "Change Request"  
       }
     }
-    stage('Stage Two') {
+    stage('Tag') {
+      when ( buildingTag() )
       steps {
-        sh 'echo "Do Nothing...this is a fork"'
+        echo "Tag"
       }
     }
-    stage('Stage Three') {
+    stage('Release') {
+      when ( branch 'main' )
       steps {
-        sh 'echo "Do Nothing...this is a fork"'
-      }
-    }
-    stage('Stage Four') {
-      steps {
-        sh 'echo "Do Nothing...XXX"'
+        echo "Release"
       }
     }
   }
