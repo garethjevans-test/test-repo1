@@ -12,7 +12,14 @@ pipeline {
       steps {
         sh 'curl -L -o jx-release-version-linux-amd64.tar.gz https://github.com/jenkins-x-plugins/jx-release-version/releases/download/v2.2.3/jx-release-version-linux-amd64.tar.gz'
         sh 'tar xvfz jx-release-version-linux-amd64.tar.gz'
-        checkout scm
+
+
+        script {
+          GIT_AUTH = credentials('github-access-token')
+          sh('''
+            git config --local credential.helper "!f() { echo username=\\$GIT_AUTH_USR; echo password=\\$GIT_AUTH_PSW; }; f"
+          ''')
+        }
       }
     }
     stage('Change Request') {
