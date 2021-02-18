@@ -42,7 +42,11 @@ pipeline {
           version = sh(returnStdout: true, script: './jx-release-version').trim()
         }
 
-        echo "New Version: $version"
+        echo "Tagging New Version: $version"
+        sh "git tag $version"
+
+        echo "Pushing Tag"
+        sh "git push origin --tags"
       }
     }
   }
