@@ -12,7 +12,7 @@ pipeline {
       steps {
         sh 'curl -L -o jx-release-version-linux-amd64.tar.gz https://github.com/jenkins-x-plugins/jx-release-version/releases/download/v2.2.3/jx-release-version-linux-amd64.tar.gz'
         sh 'tar xvfz jx-release-version-linux-amd64.tar.gz'
-        sh 'jx-release-version'
+        sh './jx-release-version'
       }
     }
     stage('Stage One') {
