@@ -31,6 +31,12 @@ pipeline {
       when { branch 'main' }
       steps {
         echo "Release"
+        sh "git remote -v"
+
+        script {
+          gitCommit = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+          version = sh(returnStdout: true, script: './jx-release-version').trim()
+        }
       }
     }
   }
