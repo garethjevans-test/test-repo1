@@ -17,7 +17,7 @@ pipeline {
         script {
           GIT_AUTH = credentials('github-access-token')
           sh('''
-            git config --local credential.helper "!f() { echo username=\\$GIT_AUTH_USR; echo password=\\$GIT_AUTH_PSW; }; f"
+            git config --local credential.helper "!f() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; f"
           ''')
         }
       }
@@ -55,16 +55,9 @@ pipeline {
         sh "git tag $version"
 
         echo "Pushing Tag"
-        sh "git push origin --tags"
-
-        //withCredentials([usernamePassword(credentialsId: 'example-secure', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-        //    def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
-        //    sh "git config user.email admin@example.com"
-        //    sh "git config user.name example"
-        //    sh "git add ."
-        //    sh "git commit -m 'Triggered Build: ${env.BUILD_NUMBER}'"
-        //    sh "git push https://${GIT_USERNAME}:${encodedPassword}@github.com/${GIT_USERNAME}/example.git"
-        //}
+        withCredentials([usernamePassword(credentialsId: 'github-access-token', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+          sh "git push origin --tags"
+        }
       }
     }
   }
