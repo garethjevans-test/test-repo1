@@ -26,6 +26,11 @@ pipeline {
 
         sh "git remote -v"
         sh "git config -l"
+
+        //withCredentials([sshUserPrivateKey(credentialsId: '<credential-id>', keyFileVariable: 'SSH_KEY')]) {
+        //  sh("git push origin <local-branch>:<remote-branch>")
+        //}
+        GIT_CREDS = credentials('github-access-token')
       }
     }
     stage('Tag') {
