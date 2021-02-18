@@ -30,7 +30,7 @@ pipeline {
         //withCredentials([sshUserPrivateKey(credentialsId: '<credential-id>', keyFileVariable: 'SSH_KEY')]) {
         //  sh("git push origin <local-branch>:<remote-branch>")
         //}
-        scripts {
+        script {
           GIT_CREDS = credentials('github-access-token')
         }
       }
