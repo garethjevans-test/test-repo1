@@ -18,7 +18,6 @@ pipeline {
           GIT_AUTH = credentials('github-access-token')
           sh('''
             git config --local credential.helper "!f() { echo username=\\$GIT_AUTH_USR; echo password=\\$GIT_AUTH_PSW; }; f"
-            git push origin HEAD:$TARGET_BRANCH
           ''')
         }
       }
