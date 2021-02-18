@@ -16,19 +16,19 @@ pipeline {
       }
     }
     stage('Change Request') {
-      when ( changeRequest() )
+      when { changeRequest() }
       steps {
         echo "Change Request"  
       }
     }
     stage('Tag') {
-      when ( buildingTag() )
+      when { buildingTag() }
       steps {
         echo "Tag"
       }
     }
     stage('Release') {
-      when ( branch 'main' )
+      when { branch 'main' }
       steps {
         echo "Release"
       }
