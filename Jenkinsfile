@@ -17,7 +17,7 @@ pipeline {
     }
     stage('Stage One') {
       steps {
-        sh 'echo "Do Nothing...this is a fork"'  
+        sh 'echo "This is a new feature"'
       }
     }
     stage('Stage Two') {
